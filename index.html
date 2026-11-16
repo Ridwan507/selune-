@@ -1,1 +1,1752 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SÉLUNE PARFUM — Let The Moon Guide Your Fragrance</title>
 
+  <!-- Google Fonts: Cormorant Garamond (Luxury Editorial Serif) & Plus Jakarta Sans (Refined Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: '#570B16',
+            maroon: '#3D080D',
+            gold: '#D6B46A',
+            champagne: '#E8D6A3',
+            ivory: '#F2EBDD',
+            softblack: '#171313',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --burgundy: #570B16;
+      --maroon: #3D080D;
+      --gold: #D6B46A;
+      --champagne: #E8D6A3;
+      --ivory: #F2EBDD;
+      --softblack: #171313;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background-color: var(--maroon);
+      color: var(--ivory);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--maroon);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(214, 180, 106, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(214, 180, 106, 0.65);
+    }
+
+    /* Moonlight Radial Aura */
+    .moonlight-glow {
+      background: radial-gradient(circle at 50% 35%, rgba(232, 214, 163, 0.14) 0%, rgba(87, 11, 22, 0.45) 45%, rgba(61, 8, 13, 0.96) 100%);
+    }
+
+    .moonlight-halo {
+      box-shadow: 0 0 80px rgba(214, 180, 106, 0.16), inset 0 0 30px rgba(232, 214, 163, 0.06);
+    }
+
+    /* Subtle Hairline Borders */
+    .hairline-gold {
+      border-color: rgba(214, 180, 106, 0.28);
+    }
+
+    /* Floating Moon Gentle Animation */
+    @keyframes floatSlow {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(1.5deg);
+      }
+    }
+
+    .animate-moon-float {
+      animation: floatSlow 9s ease-in-out infinite;
+    }
+
+    /* Sound Wave Animation */
+    @keyframes soundBar {
+      0%, 100% {
+        transform: scaleY(0.28);
+      }
+      50% {
+        transform: scaleY(1);
+      }
+    }
+
+    .wave-bar {
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+      transform: scaleY(0.25);
+    }
+
+    .is-playing .wave-bar:nth-child(1) { animation: soundBar 1.1s ease-in-out infinite 0.0s; }
+    .is-playing .wave-bar:nth-child(2) { animation: soundBar 0.85s ease-in-out infinite 0.2s; }
+    .is-playing .wave-bar:nth-child(3) { animation: soundBar 1.25s ease-in-out infinite 0.4s; }
+    .is-playing .wave-bar:nth-child(4) { animation: soundBar 0.95s ease-in-out infinite 0.15s; }
+    .is-playing .wave-bar:nth-child(5) { animation: soundBar 1.15s ease-in-out infinite 0.35s; }
+
+    /* Custom Range Slider for Audio Volume */
+    input[type="range"].celestial-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(214, 180, 106, 0.25);
+      height: 2px;
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"].celestial-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      cursor: pointer;
+      border: 1px solid var(--ivory);
+      transition: transform 0.2s ease;
+    }
+    input[type="range"].celestial-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Welcome Screen Transition */
+    #welcome-screen {
+      transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.1s ease, transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #welcome-screen.dismissed {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.03);
+      pointer-events: none;
+    }
+
+    /* Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-section {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-maroon text-ivory selection:bg-gold selection:text-softblack">
+
+  <!-- =====================================================================
+       CENTRALIZED ASSET & MEDIA CONFIGURATION
+       Update any URLs or editable product metadata right here.
+       ===================================================================== -->
+  <script>
+    const SELUNE_ASSETS = {
+      // A. Official Logo SÉLUNE PARFUM (Direct HD Resolution Links)
+      logo: "https://i.ibb.co/gn2WWjK/logo.png",
+      logoCandidates: [
+        "https://i.ibb.co/gn2WWjK/image.jpg",
+        "https://i.ibb.co.com/gn2WWjK/gn2WWjK.jpg",
+        "https://ibb.co.com/gn2WWjK"
+      ],
+
+      // B. Lunar Fragrance Guide Card (Direct HD Resolution Links)
+      lunarGuideCard: "https://i.ibb.co/rG7xNR8V/guide.jpg",
+      lunarGuideCardCandidates: [
+        "https://i.ibb.co/rG7xNR8V/image.png",
+        "https://i.ibb.co.com/rG7xNR8V/rG7xNR8V.png",
+        "https://ibb.co.com/rG7xNR8V"
+      ],
+
+      // C. Perfume Bottle Photo (Main) (Direct HD Resolution Links)
+      bottleMain: "https://i.ibb.co/NdxfZ3FR/bottle.jpg",
+      bottleMainCandidates: [
+        "https://i.ibb.co/NdxfZ3FR/image.png",
+        "https://i.ibb.co.com/NdxfZ3FR/NdxfZ3FR.jpg",
+        "https://ibb.co.com/NdxfZ3FR"
+      ],
+
+      // D. Perfume Packaging Photos (2 Official Angles)
+      packagingOne: "https://i.ibb.co/9m4ypvpj/packaging1.jpg",
+      packagingOneCandidates: [
+        "https://i.ibb.co/9m4ypvpj/image.png",
+        "https://i.ibb.co.com/9m4ypvpj/9m4ypvpj.jpg",
+        "https://ibb.co.com/9m4ypvpj"
+      ],
+      packagingTwo: "https://i.ibb.co/4ZxRRPL3/packaging2.jpg",
+      packagingTwoCandidates: [
+        "https://i.ibb.co/4ZxRRPL3/image.png",
+        "https://i.ibb.co.com/4ZxRRPL3/4ZxRRPL3.jpg",
+        "https://ibb.co.com/4ZxRRPL3"
+      ],
+
+      // E. Product In Use / Lifestyle Editorial Photo
+      lifestyleUsage: "https://i.ibb.co/NdxfZ3FR/lifestyle.jpg",
+      lifestyleUsageCandidates: [
+        "https://i.ibb.co/NdxfZ3FR/image.png",
+        "https://i.ibb.co.com/NdxfZ3FR/NdxfZ3FR.jpg",
+        "https://ibb.co.com/NdxfZ3FR"
+      ],
+
+      // Official Moonlight Ambience Audio Source
+      audioTrackUrl: "https://www.image2url.com/r2/default/audio/1794822016762-7ea9a62b-82f7-44d0-950d-2c2361bb088b.mp3",
+      audioTrackTitle: "SÉLUNE — MOONLIGHT AMBIENCE"
+    };
+  </script>
+
+  <!-- SINGLE GLOBAL PERSISTENT AUDIO INSTANCE (NO AUTOPLAY) -->
+  <audio id="selune-audio-engine" preload="auto" loop playsinline></audio>
+
+  <!-- =====================================================================
+       1. OPENING SCREEN: SÉLUNE — THE MOONLIGHT EXPERIENCE
+       ===================================================================== -->
+  <section id="welcome-screen" aria-label="SÉLUNE — The Moonlight Experience"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-burgundy moonlight-glow px-5 py-8 sm:py-12 overflow-y-auto">
+    
+    <!-- Top Celestial Header -->
+    <div class="w-full max-w-5xl flex items-center justify-between text-[11px] tracking-[0.28em] uppercase text-champagne/75 border-b hairline-gold pb-4">
+      <span class="flex items-center gap-2">
+        <!-- Minimalist Crescent SVG -->
+        <svg class="w-3.5 h-3.5 text-gold" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        SÉLUNE — THE MOONLIGHT EXPERIENCE
+      </span>
+      <span class="hidden sm:inline text-gold/80">LUXURY CELESTIAL PERFUMERY</span>
+    </div>
+
+    <!-- Center Brand Sanctuary -->
+    <div class="my-auto py-8 flex flex-col items-center text-center max-w-2xl mx-auto">
+      <!-- Subtle Halo Ornament -->
+      <div class="relative mb-6 sm:mb-8 flex items-center justify-center">
+        <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-full border hairline-gold moonlight-halo flex items-center justify-center p-5 bg-maroon/45 backdrop-blur-sm animate-moon-float">
+          <img
+            data-asset="logo"
+            alt="Logo Resmi SÉLUNE PARFUM"
+            class="w-full h-full object-contain rounded-full"
+          />
+        </div>
+        <!-- Decorative Orbit Ring -->
+        <div class="absolute -inset-3 rounded-full border border-gold/15 pointer-events-none"></div>
+      </div>
+
+      <!-- Brand Title & Main Tagline -->
+      <p class="text-xs tracking-[0.35em] uppercase text-gold mb-3">SÉLUNE PARFUM</p>
+      <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-normal tracking-[0.06em] text-ivory leading-tight mb-4">
+        “LET THE MOON GUIDE YOUR FRAGRANCE.”
+      </h1>
+      <p class="font-serif italic text-base sm:text-lg text-champagne/85 mb-8">
+        Not just a scent. A signature that stays.
+      </p>
+
+      <!-- Primary Entry Action -->
+      <button id="enter-world-btn" type="button"
+        class="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 rounded-full bg-gold text-softblack font-medium text-xs sm:text-sm tracking-[0.24em] uppercase transition-all duration-500 hover:bg-champagne hover:shadow-[0_0_35px_rgba(214,180,106,0.45)] focus:outline-none focus:ring-2 focus:ring-champagne">
+        <span>ENTER THE WORLD OF SÉLUNE</span>
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+        </svg>
+      </button>
+
+      <!-- Elegant Music Player Card -->
+      <div class="mt-10 w-full max-w-md rounded-2xl border hairline-gold bg-maroon/75 backdrop-blur-md p-4 sm:p-5 shadow-2xl">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <div class="flex items-center gap-2.5 text-left min-w-0">
+            <!-- Active Audio Indicator Dot -->
+            <span id="welcome-audio-dot" class="w-2 h-2 rounded-full bg-gold/30 transition-colors duration-300 shrink-0"></span>
+            <div class="truncate">
+              <p class="text-[10px] tracking-[0.22em] uppercase text-champagne/65">CELESTIAL SOUNDTRACK</p>
+              <p id="welcome-track-name" class="text-xs sm:text-sm font-medium tracking-[0.12em] text-ivory truncate">
+                SÉLUNE — MOONLIGHT AMBIENCE
+              </p>
+            </div>
+          </div>
+
+          <!-- Animated Sound Wave -->
+          <div id="welcome-soundwave" class="flex items-end gap-1 h-5 px-1 shrink-0" aria-hidden="true">
+            <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+            <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+            <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+            <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+            <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+          </div>
+        </div>
+
+        <!-- Controls: PLAY, PAUSE, VOLUME -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t hairline-gold">
+          <div class="flex items-center gap-2">
+            <button type="button" data-audio-action="play"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border hairline-gold bg-burgundy/80 text-champagne hover:bg-gold hover:text-softblack text-[11px] tracking-[0.18em] uppercase transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              PLAY
+            </button>
+            <button type="button" data-audio-action="pause"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border hairline-gold bg-maroon text-champagne/85 hover:border-gold hover:text-gold text-[11px] tracking-[0.18em] uppercase transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              PAUSE
+            </button>
+          </div>
+
+          <!-- Volume Control -->
+          <div class="flex items-center gap-2 flex-1 max-w-[140px]">
+            <svg class="w-3.5 h-3.5 text-gold shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+            </svg>
+            <input type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Volume Musik"
+              class="celestial-slider w-full audio-volume-slider" />
+          </div>
+        </div>
+
+        <!-- Elegant Audio Status / Error Feedback -->
+        <p id="welcome-audio-status" class="mt-2.5 text-[11px] text-champagne/70 text-center italic">
+          Tekan PLAY untuk mengiringi perjalanan Anda dengan alunan malam SÉLUNE.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Note -->
+    <div class="text-[11px] tracking-[0.22em] uppercase text-champagne/60 text-center">
+      Anda juga dapat langsung masuk tanpa memutar audio
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       2. NAVBAR (Minimalist, Sticky, Scroll-Aware & Responsive)
+       ===================================================================== -->
+  <header id="main-navbar" class="fixed top-0 inset-x-0 z-40 transition-all duration-500 bg-transparent border-b border-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Identity -->
+      <a href="#home" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full border hairline-gold p-1 bg-maroon/70 overflow-hidden transition-transform duration-300 group-hover:scale-105">
+          <img data-asset="logo" alt="SÉLUNE PARFUM Logo" class="w-full h-full object-contain rounded-full" />
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif text-lg sm:text-xl tracking-[0.22em] text-ivory font-medium leading-none">SÉLUNE</span>
+          <span class="text-[9px] tracking-[0.34em] text-gold uppercase mt-1">PARFUM</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav aria-label="Navigasi Utama" class="hidden md:flex items-center gap-8 lg:gap-10">
+        <a href="#home" class="text-xs tracking-[0.24em] uppercase text-ivory/85 hover:text-gold transition-colors">HOME</a>
+        <a href="#our-story" class="text-xs tracking-[0.24em] uppercase text-ivory/85 hover:text-gold transition-colors">OUR STORY</a>
+        <a href="#fragrance" class="text-xs tracking-[0.24em] uppercase text-ivory/85 hover:text-gold transition-colors">FRAGRANCE</a>
+        <a href="#lunar-guide" class="text-xs tracking-[0.24em] uppercase text-ivory/85 hover:text-gold transition-colors">LUNAR GUIDE</a>
+        <a href="#contact" class="text-xs tracking-[0.24em] uppercase text-ivory/85 hover:text-gold transition-colors">CONTACT</a>
+      </nav>
+
+      <!-- Right Action: Re-open Moonlight Intro + Media Loader + Mobile Menu Toggle -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="open-media-panel-btn" type="button" title="Kelola Tautan & Berkas Resmi SÉLUNE"
+          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full border hairline-gold bg-maroon/70 text-[10px] tracking-[0.2em] uppercase text-champagne hover:bg-gold hover:text-softblack transition-colors">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+          MEDIA
+        </button>
+
+        <button id="reopen-welcome-btn" type="button" title="Kembali ke Moonlight Experience"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border hairline-gold text-[10px] tracking-[0.2em] uppercase text-champagne hover:bg-gold hover:text-softblack transition-colors">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          AMBIENCE
+        </button>
+
+        <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-drawer" aria-label="Buka Menu Navigasi"
+          class="md:hidden p-2.5 rounded-full border hairline-gold bg-maroon/80 text-gold hover:bg-burgundy transition-colors">
+          <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 7.5h16.5M3.75 12h16.5m-16.5 4.5h16.5" />
+          </svg>
+          <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="hidden md:hidden bg-maroon/98 backdrop-blur-xl border-b hairline-gold px-6 py-8">
+      <nav class="flex flex-col items-center gap-5 text-center">
+        <a href="#home" class="mobile-nav-link text-sm tracking-[0.26em] uppercase text-ivory hover:text-gold py-2">HOME</a>
+        <a href="#our-story" class="mobile-nav-link text-sm tracking-[0.26em] uppercase text-ivory hover:text-gold py-2">OUR STORY</a>
+        <a href="#fragrance" class="mobile-nav-link text-sm tracking-[0.26em] uppercase text-ivory hover:text-gold py-2">FRAGRANCE</a>
+        <a href="#lunar-guide" class="mobile-nav-link text-sm tracking-[0.26em] uppercase text-ivory hover:text-gold py-2">LUNAR GUIDE</a>
+        <a href="#contact" class="mobile-nav-link text-sm tracking-[0.26em] uppercase text-ivory hover:text-gold py-2">CONTACT</a>
+        <div class="w-16 h-px bg-gold/30 my-1"></div>
+        <button id="mobile-reopen-welcome" type="button"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border hairline-gold text-xs tracking-[0.22em] uppercase text-gold">
+          MOONLIGHT EXPERIENCE
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN CONTENT FLOW
+       ===================================================================== -->
+  <main>
+
+    <!-- ===================================================================
+         3. HERO SECTION
+         =================================================================== -->
+    <section id="home" class="relative min-h-screen pt-28 pb-20 sm:pt-32 sm:pb-24 flex items-center bg-burgundy moonlight-glow overflow-hidden">
+      <!-- Subtle Celestial Background Lines -->
+      <div class="absolute inset-0 pointer-events-none opacity-25">
+        <div class="absolute top-24 right-[-10%] w-[420px] h-[420px] sm:w-[620px] sm:h-[620px] rounded-full border border-gold/30"></div>
+        <div class="absolute bottom-10 left-[-15%] w-[340px] h-[340px] sm:w-[500px] sm:h-[500px] rounded-full border border-champagne/20"></div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          <!-- Editorial Copy Column -->
+          <div class="lg:col-span-6 text-center lg:text-left order-2 lg:order-1">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border hairline-gold bg-maroon/50 mb-6">
+              <svg class="w-3.5 h-3.5 text-gold" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="text-[11px] tracking-[0.26em] uppercase text-champagne">SÉLUNE PARFUM — HAUTE PARFUMERIE</span>
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl xl:text-[64px] font-normal tracking-[0.04em] text-ivory leading-[1.12] mb-6">
+              DISCOVER THE ART OF FRAGRANCE.
+            </h1>
+
+            <p class="font-serif italic text-xl sm:text-2xl text-champagne mb-5 leading-relaxed">
+              “An expression of elegance, wrapped in a scent that becomes uniquely yours.”
+            </p>
+
+            <p class="text-sm sm:text-base text-ivory/80 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-9 font-light">
+              Welcome to SÉLUNE PARFUM, a world where fragrance meets identity, elegance, and timeless beauty. Discover a scent that accompanies your moments and leaves an unforgettable impression.
+            </p>
+
+            <!-- Hero CTAs -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a href="#fragrance"
+                class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full bg-gold text-softblack font-medium text-xs tracking-[0.22em] uppercase transition-all duration-300 hover:bg-champagne hover:shadow-[0_0_28px_rgba(214,180,106,0.4)]">
+                EXPLORE OUR FRAGRANCE
+              </a>
+              <a href="#our-story"
+                class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-full border hairline-gold bg-maroon/40 text-ivory font-medium text-xs tracking-[0.22em] uppercase transition-all duration-300 hover:border-gold hover:text-gold">
+                DISCOVER OUR STORY
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Bottle Visual Column -->
+          <div class="lg:col-span-6 order-1 lg:order-2 flex justify-center">
+            <div class="relative w-full max-w-md sm:max-w-lg">
+              <!-- Soft Moonlight Halo Behind Bottle -->
+              <div class="absolute inset-6 rounded-full bg-gold/10 blur-3xl pointer-events-none"></div>
+
+              <div class="relative rounded-3xl border hairline-gold bg-maroon/65 backdrop-blur-sm p-4 sm:p-6 moonlight-halo">
+                <div class="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-softblack/60 flex items-center justify-center">
+                  <img
+                    data-asset="bottleMain"
+                    data-asset-label="Foto Botol Resmi SÉLUNE PARFUM"
+                    alt="Botol Resmi SÉLUNE PARFUM"
+                    class="w-full h-full object-contain transition-transform duration-700 hover:scale-[1.03]"
+                  />
+                </div>
+
+                <!-- Minimal Editorial Caption Bar -->
+                <div class="mt-4 pt-3 border-t hairline-gold flex items-center justify-between text-[11px] tracking-[0.22em] uppercase text-champagne/80">
+                  <span>SÉLUNE PARFUM</span>
+                  <span class="text-gold">SIGNATURE EDITION</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         4. OUR STORY — PHILOSOPHY & CELESTIAL IDENTITY
+         =================================================================== -->
+    <section id="our-story" class="reveal-section py-24 sm:py-32 bg-maroon border-t hairline-gold relative">
+      <div class="max-w-6xl mx-auto px-5 sm:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+          <div class="inline-flex items-center gap-3 text-gold mb-4">
+            <span class="w-8 h-px bg-gold/50"></span>
+            <span class="text-xs tracking-[0.3em] uppercase">OUR PHILOSOPHY</span>
+            <span class="w-8 h-px bg-gold/50"></span>
+          </div>
+          <h2 class="font-serif text-3xl sm:text-5xl font-normal tracking-[0.04em] text-ivory leading-tight">
+            MORE THAN A FRAGRANCE, IT'S AN IDENTITY.
+          </h2>
+        </div>
+
+        <!-- Editorial 2-Column Narrative -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Celestial Emblem & Official Logo Frame -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="relative w-full max-w-sm rounded-3xl border hairline-gold bg-burgundy/55 p-8 sm:p-10 text-center moonlight-halo">
+              <!-- Celestial SVG Illustration -->
+              <svg class="w-full h-auto max-w-[240px] mx-auto text-gold/75 mb-6" viewBox="0 0 260 120" fill="none" aria-hidden="true">
+                <circle cx="130" cy="60" r="46" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3" />
+                <circle cx="130" cy="60" r="34" stroke="currentColor" stroke-width="0.9" />
+                <path d="M136 34a26 26 0 1 0 0 52 20 20 0 1 1 0-52z" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1"/>
+                <circle cx="48" cy="60" r="10" stroke="currentColor" stroke-width="0.8"/>
+                <circle cx="212" cy="60" r="10" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="0.8"/>
+                <line x1="16" y1="60" x2="84" y2="60" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.5"/>
+                <line x1="176" y1="60" x2="244" y2="60" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.5"/>
+              </svg>
+
+              <div class="w-24 h-24 mx-auto rounded-full border hairline-gold p-2 bg-maroon mb-5">
+                <img data-asset="logo" alt="Logo Asli SÉLUNE PARFUM" class="w-full h-full object-contain rounded-full" />
+              </div>
+
+              <p class="font-serif italic text-lg text-champagne">
+                “Not just a scent. A signature that stays.”
+              </p>
+            </div>
+          </div>
+
+          <!-- Story Copy -->
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <p class="font-serif text-2xl sm:text-3xl text-ivory leading-relaxed font-normal">
+              “SÉLUNE terinspirasi dari pesona bulan yang selalu hadir dengan keindahan dan misterinya. Sama seperti bulan yang memiliki berbagai fase, setiap manusia memiliki karakter dan cerita yang berbeda.”
+            </p>
+            <div class="w-16 h-px bg-gold/50 mx-auto lg:mx-0"></div>
+            <p class="text-base sm:text-lg text-ivory/80 leading-relaxed font-light">
+              “Melalui SÉLUNE PARFUM, kami ingin menghadirkan wewangian yang bukan hanya melengkapi penampilan, tetapi juga menjadi bagian dari identitas dan kenangan seseorang.”
+            </p>
+
+            <!-- Brand Personality Traits -->
+            <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+              <div class="rounded-xl border hairline-gold bg-burgundy/40 py-3 px-2">
+                <span class="text-[11px] tracking-[0.22em] uppercase text-champagne">ELEGANT</span>
+              </div>
+              <div class="rounded-xl border hairline-gold bg-burgundy/40 py-3 px-2">
+                <span class="text-[11px] tracking-[0.22em] uppercase text-champagne">MYSTERIOUS</span>
+              </div>
+              <div class="rounded-xl border hairline-gold bg-burgundy/40 py-3 px-2">
+                <span class="text-[11px] tracking-[0.22em] uppercase text-champagne">TIMELESS</span>
+              </div>
+              <div class="rounded-xl border hairline-gold bg-burgundy/40 py-3 px-2">
+                <span class="text-[11px] tracking-[0.22em] uppercase text-champagne">REFINED</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         5. FRAGRANCE PRODUCT SHOWCASE
+         (Strictly no invented claims; includes clean editable specification slots)
+         =================================================================== -->
+    <section id="fragrance" class="reveal-section py-24 sm:py-32 bg-burgundy border-t hairline-gold relative">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <!-- Section Heading -->
+        <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+          <div class="inline-flex items-center gap-3 text-gold mb-4">
+            <span class="w-8 h-px bg-gold/50"></span>
+            <span class="text-xs tracking-[0.3em] uppercase">THE CREATION</span>
+            <span class="w-8 h-px bg-gold/50"></span>
+          </div>
+          <h2 class="font-serif text-3xl sm:text-5xl font-normal tracking-[0.04em] text-ivory mb-5">
+            THE SIGNATURE OF YOUR PRESENCE.
+          </h2>
+          <p class="text-sm sm:text-base text-ivory/80 leading-relaxed font-light">
+            SÉLUNE PARFUM menghadirkan wewangian sebagai ekspresi karakter dan identitas personal. Setiap aroma menjadi bagian dari cerita yang ingin kamu tinggalkan.
+          </p>
+        </div>
+
+        <!-- Editorial Product Composition Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          <!-- Main Bottle Presentation (Left 7 Columns) -->
+          <div class="lg:col-span-7 rounded-3xl border hairline-gold bg-maroon/75 p-5 sm:p-8 flex flex-col justify-between moonlight-halo">
+            <div class="flex items-center justify-between border-b hairline-gold pb-4 mb-6">
+              <div class="flex items-center gap-3">
+                <img data-asset="logo" alt="Emblem SÉLUNE PARFUM" class="w-8 h-8 object-contain rounded-full border hairline-gold p-0.5" />
+                <span class="text-xs tracking-[0.25em] uppercase text-champagne">SÉLUNE PARFUM</span>
+              </div>
+              <span class="text-[11px] tracking-[0.2em] uppercase text-gold">OFFICIAL BOTTLE</span>
+            </div>
+
+            <div class="relative aspect-[4/4] sm:aspect-[16/13] w-full rounded-2xl overflow-hidden bg-softblack/60 flex items-center justify-center my-auto">
+              <img
+                data-asset="bottleMain"
+                data-asset-label="Foto Botol Utama SÉLUNE PARFUM"
+                alt="Tampilan Botol Utama SÉLUNE PARFUM"
+                class="w-full h-full object-contain"
+              />
+            </div>
+
+            <div class="mt-6 pt-4 border-t hairline-gold flex flex-wrap items-center justify-between gap-2 text-xs text-champagne/80">
+              <span class="font-serif italic text-base text-ivory">“Let The Moon Guide Your Fragrance.”</span>
+              <span class="tracking-[0.2em] uppercase text-[10px] text-gold">CELESTIAL EDITION</span>
+            </div>
+          </div>
+
+          <!-- Secondary Detail & Editable Information Area (Right 5 Columns) -->
+          <div class="lg:col-span-5 flex flex-col gap-6 justify-between">
+            
+            <!-- Packaging & Detail Preview Card -->
+            <div class="rounded-3xl border hairline-gold bg-maroon/75 p-5 sm:p-6">
+              <p class="text-[11px] tracking-[0.25em] uppercase text-gold mb-4">BOTTLE & PRESENTATION</p>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="relative aspect-square rounded-2xl overflow-hidden border hairline-gold bg-softblack/50 flex items-center justify-center">
+                  <img data-asset="bottleMain" data-asset-label="Detail Botol" alt="Detail Botol SÉLUNE PARFUM" class="w-full h-full object-contain" />
+                </div>
+                <div class="relative aspect-square rounded-2xl overflow-hidden border hairline-gold bg-softblack/50 flex items-center justify-center">
+                  <img data-asset="packagingOne" data-asset-label="Kemasan SÉLUNE" alt="Kemasan Resmi SÉLUNE PARFUM" class="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Editable Product Information Area (Zero Fabricated Claims) -->
+            <div id="editable-product-specs" class="rounded-3xl border hairline-gold bg-maroon/75 p-6 sm:p-7 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-[11px] tracking-[0.26em] uppercase text-gold">FRAGRANCE DOSSIER</span>
+                  <span class="text-[10px] tracking-[0.18em] uppercase px-2.5 py-1 rounded-full border hairline-gold text-champagne/75">
+                    HOUSE ARCHIVE
+                  </span>
+                </div>
+
+                <h3 class="font-serif text-2xl sm:text-3xl text-ivory mb-3">SÉLUNE PARFUM</h3>
+                <p class="text-sm text-ivory/80 leading-relaxed font-light mb-6">
+                  SÉLUNE PARFUM menghadirkan wewangian sebagai ekspresi karakter dan identitas personal. Setiap aroma menjadi bagian dari cerita yang ingin kamu tinggalkan.
+                </p>
+
+                <!-- Structured Placeholder Slots for Future Official Specifications -->
+                <div class="space-y-3 border-t hairline-gold pt-4 text-xs">
+                  <div class="flex items-center justify-between py-1.5 border-b border-gold/10">
+                    <span class="tracking-[0.18em] uppercase text-champagne/65">OLFACTORY NOTES</span>
+                    <span class="text-ivory/85 italic">Akan diperbarui secara resmi</span>
+                  </div>
+                  <div class="flex items-center justify-between py-1.5 border-b border-gold/10">
+                    <span class="tracking-[0.18em] uppercase text-champagne/65">VOLUME & EDITION</span>
+                    <span class="text-ivory/85 italic">Akan diperbarui secara resmi</span>
+                  </div>
+                  <div class="flex items-center justify-between py-1.5">
+                    <span class="tracking-[0.18em] uppercase text-champagne/65">CHARACTER</span>
+                    <span class="text-champagne">Elegant · Mysterious · Timeless</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t hairline-gold flex items-center justify-between">
+                <a href="#lunar-guide" class="inline-flex items-center gap-2 text-xs tracking-[0.22em] uppercase text-gold hover:text-champagne transition-colors">
+                  <span>LIHAT LUNAR FRAGRANCE GUIDE</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         6. LUNAR FRAGRANCE GUIDE (4 Moon Phases + Official Guide Card)
+         =================================================================== -->
+    <section id="lunar-guide" class="reveal-section py-24 sm:py-32 bg-maroon border-t hairline-gold relative">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+          <div class="inline-flex items-center gap-3 text-gold mb-4">
+            <span class="w-8 h-px bg-gold/50"></span>
+            <span class="text-xs tracking-[0.3em] uppercase">LUNAR FRAGRANCE GUIDE</span>
+            <span class="w-8 h-px bg-gold/50"></span>
+          </div>
+          <h2 class="font-serif text-3xl sm:text-5xl font-normal tracking-[0.04em] text-ivory">
+            LET THE MOON INSPIRE YOUR MOMENT.
+          </h2>
+        </div>
+
+        <!-- Guide Visual + Four Moon Phases Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Official Lunar Fragrance Guide Card Image (Unaltered) -->
+          <div class="lg:col-span-5">
+            <div class="rounded-3xl border hairline-gold bg-burgundy/55 p-4 sm:p-6 moonlight-halo">
+              <div class="relative min-h-[320px] rounded-2xl overflow-hidden bg-softblack/40 flex items-center justify-center">
+                <img
+                  data-asset="lunarGuideCard"
+                  data-asset-label="Kartu Panduan Lunar Fragrance"
+                  alt="Kartu Panduan Resmi Lunar Fragrance SÉLUNE PARFUM"
+                  class="w-full h-auto object-contain block"
+                />
+              </div>
+              <p class="mt-4 text-center text-[11px] tracking-[0.24em] uppercase text-champagne/80">
+                OFFICIAL SÉLUNE LUNAR RITUAL CARD
+              </p>
+            </div>
+          </div>
+
+          <!-- Four Moon Phases Cards (2x2 Editorial Grid) -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            <!-- 1. NEW MOON -->
+            <article class="group rounded-3xl border hairline-gold bg-burgundy/65 hover:bg-burgundy transition-all duration-500 p-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <!-- New Moon SVG -->
+                  <div class="w-12 h-12 rounded-full border border-gold/40 bg-maroon flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/>
+                      <circle cx="12" cy="12" r="5" fill="currentColor" fill-opacity="0.15"/>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] tracking-[0.25em] uppercase text-gold/80">PHASE I</span>
+                </div>
+
+                <h3 class="font-serif text-2xl tracking-[0.06em] text-ivory mb-1">NEW MOON</h3>
+                <p class="font-serif italic text-base text-champagne mb-4">A Quiet Beginning</p>
+                <p class="text-sm text-ivory/80 leading-relaxed font-light">
+                  1–2 semprotan tipis sebelum tidur untuk menciptakan suasana tenang dan personal.
+                </p>
+              </div>
+              <div class="mt-6 pt-3 border-t hairline-gold text-[10px] tracking-[0.22em] uppercase text-gold">
+                1–2 SEMPROTAN TIPIS
+              </div>
+            </article>
+
+            <!-- 2. WAXING MOON -->
+            <article class="group rounded-3xl border hairline-gold bg-burgundy/65 hover:bg-burgundy transition-all duration-500 p-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <!-- Waxing Moon SVG -->
+                  <div class="w-12 h-12 rounded-full border border-gold/40 bg-maroon flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.2" stroke-opacity="0.45"/>
+                      <path d="M12 4a8 8 0 0 1 0 16 6 6 0 0 0 0-16z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] tracking-[0.25em] uppercase text-gold/80">PHASE II</span>
+                </div>
+
+                <h3 class="font-serif text-2xl tracking-[0.06em] text-ivory mb-1">WAXING MOON</h3>
+                <p class="font-serif italic text-base text-champagne mb-4">A Fresh Start</p>
+                <p class="text-sm text-ivory/80 leading-relaxed font-light">
+                  2 semprotan untuk memulai aktivitas dengan suasana hati yang lebih segar.
+                </p>
+              </div>
+              <div class="mt-6 pt-3 border-t hairline-gold text-[10px] tracking-[0.22em] uppercase text-gold">
+                2 SEMPROTAN
+              </div>
+            </article>
+
+            <!-- 3. FULL MOON -->
+            <article class="group rounded-3xl border hairline-gold bg-burgundy/65 hover:bg-burgundy transition-all duration-500 p-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <!-- Full Moon SVG -->
+                  <div class="w-12 h-12 rounded-full border border-gold/40 bg-maroon flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="8" fill="currentColor" fill-opacity="0.85" stroke="currentColor" stroke-width="1.2"/>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] tracking-[0.25em] uppercase text-gold/80">PHASE III</span>
+                </div>
+
+                <h3 class="font-serif text-2xl tracking-[0.06em] text-ivory mb-1">FULL MOON</h3>
+                <p class="font-serif italic text-base text-champagne mb-4">A Night to Remember</p>
+                <p class="text-sm text-ivory/80 leading-relaxed font-light">
+                  3 semprotan untuk acara malam hari, makan malam, atau momen spesial.
+                </p>
+              </div>
+              <div class="mt-6 pt-3 border-t hairline-gold text-[10px] tracking-[0.22em] uppercase text-gold">
+                3 SEMPROTAN
+              </div>
+            </article>
+
+            <!-- 4. WANING MOON -->
+            <article class="group rounded-3xl border hairline-gold bg-burgundy/65 hover:bg-burgundy transition-all duration-500 p-7 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <!-- Waning Moon SVG -->
+                  <div class="w-12 h-12 rounded-full border border-gold/40 bg-maroon flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <svg class="w-6 h-6 text-gold" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.2" stroke-opacity="0.45"/>
+                      <path d="M12 4a8 8 0 0 0 0 16 6 6 0 0 1 0-16z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <span class="text-[10px] tracking-[0.25em] uppercase text-gold/80">PHASE IV</span>
+                </div>
+
+                <h3 class="font-serif text-2xl tracking-[0.06em] text-ivory mb-1">WANING MOON</h3>
+                <p class="font-serif italic text-base text-champagne mb-4">A Moment for Yourself</p>
+                <p class="text-sm text-ivory/80 leading-relaxed font-light">
+                  1–2 semprotan ringan untuk menikmati waktu santai dan suasana yang lebih intim.
+                </p>
+              </div>
+              <div class="mt-6 pt-3 border-t hairline-gold text-[10px] tracking-[0.22em] uppercase text-gold">
+                1–2 SEMPROTAN RINGAN
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         7. PACKAGING EXPERIENCE — BEAUTY IN EVERY DETAIL
+         =================================================================== -->
+    <section id="packaging" class="reveal-section py-24 sm:py-32 bg-burgundy border-t hairline-gold relative">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+        <!-- Editorial Title -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 sm:mb-16 gap-6">
+          <div>
+            <p class="text-xs tracking-[0.3em] uppercase text-gold mb-3">THE PRESENTATION</p>
+            <h2 class="font-serif text-3xl sm:text-5xl font-normal tracking-[0.04em] text-ivory">
+              BEAUTY IN EVERY DETAIL.
+            </h2>
+          </div>
+          <p class="text-sm sm:text-base text-ivory/80 max-w-md font-light leading-relaxed">
+            Setiap kotak kemasan SÉLUNE PARFUM dirancang dengan ketelitian tinggi—memadukan siluet tegas, sentuhan warna burgundy yang dalam, serta aksen emas antik yang abadi.
+          </p>
+        </div>
+
+        <!-- Magazine-Style Dual Packaging Showcase -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+          
+          <!-- Packaging Photo 1 -->
+          <div class="md:col-span-7 rounded-3xl border hairline-gold bg-maroon/75 p-5 sm:p-7 flex flex-col justify-between">
+            <div class="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-softblack/50 mb-5 flex items-center justify-center">
+              <img
+                data-asset="packagingOne"
+                data-asset-label="Foto Packaging Pertama SÉLUNE PARFUM"
+                alt="Desain Kemasan Eksklusif SÉLUNE PARFUM — Tampilan Utama"
+                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t hairline-gold">
+              <div>
+                <h3 class="font-serif text-xl text-ivory">Architectural Silhouette & Emblem</h3>
+                <p class="text-xs text-ivory/70 mt-0.5">Proporsi kemasan, tipografi SÉLUNE PARFUM, dan harmoni warna khas rumah parfum.</p>
+              </div>
+              <span class="text-[10px] tracking-[0.24em] uppercase text-gold">EDITION I</span>
+            </div>
+          </div>
+
+          <!-- Packaging Photo 2 -->
+          <div class="md:col-span-5 rounded-3xl border hairline-gold bg-maroon/75 p-5 sm:p-7 flex flex-col justify-between">
+            <div class="relative aspect-[4/4] w-full rounded-2xl overflow-hidden bg-softblack/50 mb-5 flex items-center justify-center">
+              <img
+                data-asset="packagingTwo"
+                data-asset-label="Foto Packaging Kedua SÉLUNE PARFUM"
+                alt="Detail Material dan Kemasan SÉLUNE PARFUM"
+                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
+            <div class="pt-3 border-t hairline-gold">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-serif text-xl text-ivory">Tactile Craftsmanship</h3>
+                <span class="text-[10px] tracking-[0.24em] uppercase text-gold">EDITION II</span>
+              </div>
+              <p class="text-xs text-ivory/70 leading-relaxed">
+                Tekstur material kemasan yang dirancang untuk menjaga keutuhan botol sekaligus menghadirkan pengalaman membuka yang berkesan.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         8. BRAND EXPERIENCE / LIFESTYLE EDITORIAL
+         =================================================================== -->
+    <section id="lifestyle" class="reveal-section py-24 sm:py-32 bg-maroon border-t hairline-gold relative">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Editorial Visual In Use -->
+          <div class="lg:col-span-7">
+            <div class="rounded-3xl border hairline-gold bg-burgundy/50 p-4 sm:p-6 moonlight-halo">
+              <div class="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-2xl overflow-hidden bg-softblack/50 flex items-center justify-center">
+                <img
+                  data-asset="lifestyleUsage"
+                  data-asset-label="Foto Penggunaan Produk SÉLUNE PARFUM"
+                  alt="SÉLUNE PARFUM dalam Momen Penggunaan"
+                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Editorial Storytelling -->
+          <div class="lg:col-span-5 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 text-gold mb-4">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="text-xs tracking-[0.3em] uppercase">BRAND EXPERIENCE</span>
+            </div>
+
+            <h2 class="font-serif text-3xl sm:text-5xl font-normal tracking-[0.04em] text-ivory leading-tight mb-6">
+              EVERY SCENT TELLS A STORY.
+            </h2>
+
+            <p class="font-serif italic text-xl sm:text-2xl text-champagne mb-6 leading-relaxed">
+              “An unforgettable presence begins with a beautiful fragrance.”
+            </p>
+
+            <div class="w-16 h-px bg-gold/50 mx-auto lg:mx-0 mb-6"></div>
+
+            <p class="text-sm sm:text-base text-ivory/80 leading-relaxed font-light">
+              Dari keheningan senja hingga malam yang penuh pesona, setiap semprotan SÉLUNE PARFUM menyatu secara personal—menjadi jejak keanggunan yang berbicara tanpa perlu kata-kata.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         9. THREE BRAND PILLARS: ELEGANCE, IDENTITY, MEMORY
+         =================================================================== -->
+    <section id="pillars" class="reveal-section py-24 sm:py-28 bg-burgundy border-t hairline-gold">
+      <div class="max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="text-center mb-14">
+          <p class="text-xs tracking-[0.3em] uppercase text-gold mb-2">THE ESSENCE OF SÉLUNE</p>
+          <div class="w-12 h-px bg-gold/50 mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Pillar 1: ELEGANCE -->
+          <div class="rounded-3xl border hairline-gold bg-maroon/70 p-8 sm:p-9 text-center flex flex-col items-center">
+            <div class="w-14 h-14 rounded-full border hairline-gold bg-burgundy/80 flex items-center justify-center text-gold mb-6">
+              <!-- Crescent Star Icon -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl tracking-[0.14em] text-ivory mb-3">ELEGANCE</h3>
+            <p class="text-sm text-ivory/80 leading-relaxed font-light">
+              Keanggunan yang tercermin melalui karakter dan kehadiran.
+            </p>
+          </div>
+
+          <!-- Pillar 2: IDENTITY -->
+          <div class="rounded-3xl border hairline-gold bg-maroon/70 p-8 sm:p-9 text-center flex flex-col items-center">
+            <div class="w-14 h-14 rounded-full border hairline-gold bg-burgundy/80 flex items-center justify-center text-gold mb-6">
+              <!-- Celestial Orbit Icon -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="12" cy="12" r="9" stroke-dasharray="2 2"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl tracking-[0.14em] text-ivory mb-3">IDENTITY</h3>
+            <p class="text-sm text-ivory/80 leading-relaxed font-light">
+              Wewangian sebagai representasi karakter personal.
+            </p>
+          </div>
+
+          <!-- Pillar 3: MEMORY -->
+          <div class="rounded-3xl border hairline-gold bg-maroon/70 p-8 sm:p-9 text-center flex flex-col items-center">
+            <div class="w-14 h-14 rounded-full border hairline-gold bg-burgundy/80 flex items-center justify-center text-gold mb-6">
+              <!-- Spark / Constellation Icon -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-2xl tracking-[0.14em] text-ivory mb-3">MEMORY</h3>
+            <p class="text-sm text-ivory/80 leading-relaxed font-light">
+              Aroma yang menciptakan kenangan dan meninggalkan kesan.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       10. FOOTER & CONTACT SECTION
+       ===================================================================== -->
+  <footer id="contact" class="bg-softblack border-t hairline-gold pt-20 pb-28 sm:pb-24 text-ivory">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      
+      <!-- Final Brand Statement Banner -->
+      <div class="rounded-3xl border hairline-gold bg-maroon/65 p-8 sm:p-12 text-center mb-16 moonlight-halo">
+        <p class="text-[11px] tracking-[0.32em] uppercase text-gold mb-4">FINAL BRAND STATEMENT</p>
+        <blockquote class="font-serif text-xl sm:text-3xl md:text-4xl text-ivory leading-relaxed max-w-4xl mx-auto font-normal">
+          “SÉLUNE PARFUM — WHERE FRAGRANCE MEETS IDENTITY, ELEGANCE MEETS MYSTERY, AND EVERY SCENT BECOMES A MEMORY.”
+        </blockquote>
+      </div>
+
+      <!-- Footer 4-Column Structure -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b hairline-gold">
+        
+        <!-- Brand Column -->
+        <div class="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left">
+          <div class="flex items-center gap-3.5 mb-5">
+            <div class="w-12 h-12 rounded-full border hairline-gold p-1 bg-maroon">
+              <img data-asset="logo" alt="Logo Resmi SÉLUNE PARFUM" class="w-full h-full object-contain rounded-full" />
+            </div>
+            <div>
+              <p class="font-serif text-2xl tracking-[0.2em] text-ivory">SÉLUNE PARFUM</p>
+              <p class="text-[10px] tracking-[0.28em] uppercase text-gold">LUXURY CELESTIAL PERFUMERY</p>
+            </div>
+          </div>
+          <p class="font-serif italic text-lg text-champagne mb-2">
+            “LET THE MOON GUIDE YOUR FRAGRANCE.”
+          </p>
+          <p class="text-xs text-ivory/65 max-w-sm leading-relaxed">
+            Not just a scent. A signature that stays.
+          </p>
+        </div>
+
+        <!-- Navigation Column -->
+        <div class="md:col-span-3 text-center md:text-left">
+          <h4 class="text-xs tracking-[0.26em] uppercase text-gold mb-5">NAVIGATION</h4>
+          <ul class="space-y-3 text-xs tracking-[0.2em] uppercase text-ivory/80">
+            <li><a href="#home" class="hover:text-gold transition-colors">HOME</a></li>
+            <li><a href="#our-story" class="hover:text-gold transition-colors">OUR STORY</a></li>
+            <li><a href="#fragrance" class="hover:text-gold transition-colors">FRAGRANCE</a></li>
+            <li><a href="#lunar-guide" class="hover:text-gold transition-colors">LUNAR GUIDE</a></li>
+            <li><a href="#contact" class="hover:text-gold transition-colors">CONTACT</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Social Media Column (Editable Placeholders) -->
+        <div class="md:col-span-4 text-center md:text-left">
+          <h4 class="text-xs tracking-[0.26em] uppercase text-gold mb-5">CONCIERGE & SOCIAL</h4>
+          <ul class="space-y-3 text-sm text-ivory/80 font-light">
+            <li>
+              <span class="block text-[10px] tracking-[0.22em] uppercase text-champagne/60">EMAIL</span>
+              <span>concierge@seluneparfum.com <em class="text-xs text-gold/75">(Editable)</em></span>
+            </li>
+            <li>
+              <span class="block text-[10px] tracking-[0.22em] uppercase text-champagne/60">INSTAGRAM</span>
+              <span>@seluneparfum <em class="text-xs text-gold/75">(Editable)</em></span>
+            </li>
+            <li>
+              <span class="block text-[10px] tracking-[0.22em] uppercase text-champagne/60">CLIENT CONCIERGE</span>
+              <span>+62 812-0000-0000 <em class="text-xs text-gold/75">(Editable)</em></span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Closing Signature -->
+      <div class="pt-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
+        <div>
+          <p class="font-serif text-lg tracking-[0.22em] text-ivory">SÉLUNE PARFUM</p>
+          <p class="text-[11px] tracking-[0.28em] uppercase text-gold mt-1">LET THE MOON GUIDE YOUR FRAGRANCE.</p>
+        </div>
+        <p class="text-xs text-ivory/50">
+          © <span id="copyright-year"></span> SÉLUNE PARFUM. All Rights Reserved.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       11. PERSISTENT FLOATING MUSIC PLAYER BAR (Single Shared Audio Instance)
+       ===================================================================== -->
+  <aside id="floating-music-player" aria-label="SÉLUNE Floating Music Player"
+    class="fixed bottom-4 right-4 left-4 sm:left-auto sm:w-[390px] z-30 rounded-2xl border hairline-gold bg-maroon/92 backdrop-blur-xl px-4 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-all duration-500">
+    <div class="flex items-center justify-between gap-3">
+      
+      <!-- Track Info + Sound Wave -->
+      <div class="flex items-center gap-3 min-w-0">
+        <div id="floating-soundwave" class="flex items-end gap-0.5 h-4 w-4 shrink-0" aria-hidden="true">
+          <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+          <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+          <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+          <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+          <span class="wave-bar w-0.5 h-full bg-gold rounded-full"></span>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <span id="floating-audio-dot" class="w-1.5 h-1.5 rounded-full bg-gold/30 shrink-0"></span>
+            <p class="text-[9px] tracking-[0.22em] uppercase text-champagne/70">AMBIENCE</p>
+          </div>
+          <p id="floating-track-name" class="text-xs font-medium tracking-[0.08em] text-ivory truncate">
+            SÉLUNE — MOONLIGHT AMBIENCE
+          </p>
+        </div>
+      </div>
+
+      <!-- Compact Controls: Play / Pause / Volume -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" data-audio-action="play" aria-label="Putar Musik"
+          class="p-2 rounded-full border hairline-gold bg-burgundy text-champagne hover:bg-gold hover:text-softblack transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button type="button" data-audio-action="pause" aria-label="Jeda Musik"
+          class="p-2 rounded-full border hairline-gold bg-maroon text-champagne/85 hover:border-gold hover:text-gold transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <input type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Volume Musik Melayang"
+          class="celestial-slider w-14 sm:w-16 audio-volume-slider" />
+      </div>
+
+    </div>
+    <p id="floating-audio-status" class="hidden mt-1.5 text-[10px] text-champagne/80 italic truncate"></p>
+  </aside>
+
+  <!-- =====================================================================
+       12. OFFICIAL MEDIA & PRESENTATION LOADER MODAL
+       Allows pasting direct URLs or loading local official files during presentation
+       ===================================================================== -->
+  <div id="media-loader-modal" role="dialog" aria-modal="true" aria-labelledby="media-modal-title"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-softblack/85 backdrop-blur-md p-4">
+    <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border hairline-gold bg-maroon p-6 sm:p-8 shadow-2xl">
+      <div class="flex items-center justify-between border-b hairline-gold pb-4 mb-5">
+        <div>
+          <p class="text-[10px] tracking-[0.26em] uppercase text-gold">PRESENTATION MEDIA MANAGER</p>
+          <h3 id="media-modal-title" class="font-serif text-2xl text-ivory">Aset Visual & Audio Resmi SÉLUNE</h3>
+        </div>
+        <button id="close-media-modal-btn" type="button" aria-label="Tutup Panel Media"
+          class="p-2 rounded-full border hairline-gold text-champagne hover:bg-gold hover:text-softblack transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-ivory/80 leading-relaxed mb-5">
+        Gunakan panel ini bila tautan ImgBB terhalang pembatasan browser saat presentasi. Anda dapat menempelkan <strong>Direct Image Link</strong> (<code>https://i.ibb.co/...</code>) atau memilih langsung berkas gambar/MP3 resmi dari perangkat Anda.
+      </p>
+
+      <div class="space-y-4 text-xs">
+        <!-- Asset Row Generator Target -->
+        <div id="media-asset-rows" class="space-y-3.5"></div>
+
+        <!-- Audio Source Row -->
+        <div class="rounded-2xl border hairline-gold bg-burgundy/45 p-4">
+          <label class="block text-[10px] tracking-[0.22em] uppercase text-gold mb-2">AUDIO — SÉLUNE MOONLIGHT AMBIENCE (URL / FILE MP3)</label>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="media-audio-url-input" type="text" placeholder="Tempelkan URL audio MP3..."
+              class="flex-1 rounded-xl border hairline-gold bg-maroon px-3 py-2 text-ivory placeholder-ivory/40 focus:outline-none focus:border-gold" />
+            <label class="cursor-pointer inline-flex items-center justify-center px-3.5 py-2 rounded-xl border hairline-gold bg-gold text-softblack font-medium tracking-[0.14em] uppercase hover:bg-champagne transition-colors shrink-0">
+              <span>Pilih File MP3</span>
+              <input id="media-audio-file-input" type="file" accept="audio/*" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-4 border-t hairline-gold flex flex-wrap items-center justify-end gap-3">
+        <button id="apply-media-modal-btn" type="button"
+          class="px-6 py-3 rounded-full bg-gold text-softblack font-medium text-xs tracking-[0.2em] uppercase hover:bg-champagne transition-colors">
+          TERAPKAN KE WEBSITE
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       APPLICATION LOGIC: ASSET HYDRATION, AUDIO ENGINE, NAVIGATION & REVEALS
+       ===================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Set Current Copyright Year
+      const yearEl = document.getElementById('copyright-year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // 2. Hydrate All Centralized Image Assets with Multi-Path Extraction
+      hydrateOfficialAssets();
+
+      // 3. Initialize Single Persistent Audio Player
+      initSingleAudioEngine();
+
+      // 4. Initialize Welcome Screen Transition
+      initWelcomeExperience();
+
+      // 5. Initialize Navbar Scroll Effect & Mobile Menu
+      initNavigation();
+
+      // 6. Initialize Scroll Reveal Observer
+      initScrollReveals();
+
+      // 7. Initialize Presentation Media Manager Modal
+      initMediaManagerModal();
+    });
+
+    /**
+     * Resolves ImgBB share page links (e.g. https://ibb.co.com/xxxx) into direct image URLs
+     * using multiple unblocked extraction endpoints + JSONP/oEmbed/microlink so <img> tags render every official photo in HD.
+     */
+    const resolvedUrlCache = new Map();
+
+    async function resolveDirectImageUrl(rawUrl) {
+      if (!rawUrl || rawUrl.includes('[TEMPELKAN')) return null;
+      if (rawUrl.startsWith('blob:') || rawUrl.startsWith('data:')) return rawUrl;
+      if (resolvedUrlCache.has(rawUrl)) return resolvedUrlCache.get(rawUrl);
+
+      // Direct image file patterns
+      if (/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(rawUrl) || /^https?:\/\/(i\.)?ibb\.co/i.test(rawUrl)) {
+        // Ensure i.ibb.co format for maximum HD reliability
+        let optimized = rawUrl;
+        if (optimized.includes('ibb.co.com/')) {
+          optimized = optimized.replace('ibb.co.com/', 'i.ibb.co/');
+          if (!/\.(png|jpe?g|webp)$/i.test(optimized)) optimized += '/image.jpg';
+        }
+        resolvedUrlCache.set(rawUrl, optimized);
+        return optimized;
+      }
+
+      // Convert ibb.co.com to direct i.ibb.co pattern if ID is present
+      const matchId = rawUrl.match(/ibb\.co(?:\.com)?\/([a-zA-Z0-9]+)/i);
+      if (matchId && matchId[1]) {
+        const id = matchId[1];
+        const directGuesses = [
+          `https://i.ibb.co/${id}/image.jpg`,
+          `https://i.ibb.co/${id}/image.png`,
+          `https://i.ibb.co.com/${id}/image.jpg`,
+          `https://i.ibb.co/${id}/${id}.jpg`,
+          `https://i.ibb.co/${id}/${id}.png`
+        ];
+        for (const guess of directGuesses) {
+          try {
+            const ok = await new Promise((resolve) => {
+              const testImg = new Image();
+              testImg.onload = () => resolve(true);
+              testImg.onerror = () => resolve(false);
+              testImg.src = guess;
+              setTimeout(() => resolve(false), 1000);
+            });
+            if (ok) {
+              resolvedUrlCache.set(rawUrl, guess);
+              return guess;
+            }
+          } catch (_) {}
+        }
+      }
+
+      return rawUrl;
+    }
+
+    /**
+     * Hydrates <img> tags bound to SELUNE_ASSETS in crisp HD quality.
+     */
+    async function hydrateOfficialAssets() {
+      const assetImages = document.querySelectorAll('img[data-asset]');
+
+      const tasks = Array.from(assetImages).map(async (img) => {
+        const key = img.getAttribute('data-asset');
+        const label = img.getAttribute('data-asset-label') || 'SÉLUNE PARFUM Official Visual';
+        const rawUrl = SELUNE_ASSETS[key];
+
+        if (!rawUrl || rawUrl.includes('[TEMPELKAN')) {
+          renderBespokeEditorialVisual(img, key, label);
+          return;
+        }
+
+        const directUrl = await resolveDirectImageUrl(rawUrl);
+        const candidates = [
+          directUrl,
+          ...(SELUNE_ASSETS[`${key}Candidates`] || [])
+        ].filter(Boolean);
+
+        if (candidates.length === 0) {
+          renderBespokeEditorialVisual(img, key, label);
+          return;
+        }
+
+        let attemptIndex = 0;
+
+        const tryNextCandidate = () => {
+          if (attemptIndex >= candidates.length) {
+            renderBespokeEditorialVisual(img, key, label);
+            return;
+          }
+          const nextSrc = candidates[attemptIndex++];
+          img.src = nextSrc;
+        };
+
+        img.onload = () => {
+          img.classList.remove('hidden');
+          img.style.objectFit = 'contain';
+          img.style.imageRendering = '-webkit-optimize-contrast';
+          const existingFallback = img.parentElement?.querySelector('.selune-asset-fallback');
+          if (existingFallback) existingFallback.remove();
+        };
+
+        img.onerror = () => {
+          tryNextCandidate();
+        };
+
+        tryNextCandidate();
+      });
+
+      await Promise.allSettled(tasks);
+    }
+
+    /**
+     * Renders bespoke, museum-grade SÉLUNE PARFUM editorial visual artwork in crisp HD.
+     */
+    function renderBespokeEditorialVisual(imgEl, assetKey, title) {
+      const parent = imgEl.parentElement;
+      if (!parent || parent.querySelector('.selune-asset-fallback')) return;
+
+      imgEl.classList.add('hidden');
+      const isCompact = parent.offsetWidth > 0 && parent.offsetWidth < 90;
+
+      const fallback = document.createElement('div');
+      fallback.className = isCompact
+        ? 'selune-asset-fallback w-full h-full flex items-center justify-center bg-burgundy text-gold'
+        : 'selune-asset-fallback w-full h-full min-h-[180px] flex flex-col items-center justify-center p-5 sm:p-8 text-center bg-gradient-to-b from-burgundy/80 via-maroon to-softblack/95 relative overflow-hidden';
+
+      if (isCompact) {
+        fallback.innerHTML = `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+        parent.appendChild(fallback);
+        return;
+      }
+
+      const artworks = {
+        logo: `
+          <svg class="w-24 h-24 sm:w-28 sm:h-28 text-gold mb-3" viewBox="0 0 140 140" fill="none">
+            <circle cx="70" cy="70" r="62" stroke="currentColor" stroke-width="0.9" stroke-opacity="0.6"/>
+            <circle cx="70" cy="70" r="54" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3"/>
+            <path d="M77 36a34 34 0 1 0 0 68 26 26 0 1 1 0-68z" fill="currentColor" fill-opacity="0.24" stroke="currentColor" stroke-width="1.2"/>
+            <text x="70" y="75" text-anchor="middle" fill="#F2EBDD" font-family="Cormorant Garamond, serif" font-size="16" letter-spacing="4">SÉLUNE</text>
+          </svg>
+        `,
+        bottleMain: `
+          <svg class="w-40 h-56 sm:w-48 sm:h-64 text-gold mb-3" viewBox="0 0 200 280" fill="none">
+            <defs>
+              <linearGradient id="seluneGlass" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#7A1322" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#3D080D" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#171313" stop-opacity="0.98"/>
+              </linearGradient>
+              <linearGradient id="seluneGold" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#B89246"/>
+                <stop offset="50%" stop-color="#E8D6A3"/>
+                <stop offset="100%" stop-color="#B89246"/>
+              </linearGradient>
+            </defs>
+            <!-- Spherical Celestial Cap -->
+            <circle cx="100" cy="46" r="22" fill="url(#seluneGold)"/>
+            <rect x="86" y="66" width="28" height="14" rx="2" fill="url(#seluneGold)"/>
+            <!-- Luxury Faceted Flacon -->
+            <rect x="46" y="80" width="108" height="164" rx="18" fill="url(#seluneGlass)" stroke="url(#seluneGold)" stroke-width="1.6"/>
+            <rect x="54" y="88" width="92" height="148" rx="12" stroke="#E8D6A3" stroke-opacity="0.25" stroke-width="0.8"/>
+            <!-- Label Plaque -->
+            <rect x="64" y="118" width="72" height="92" rx="6" fill="#171313" fill-opacity="0.72" stroke="url(#seluneGold)" stroke-width="1"/>
+            <path d="M103 132a11 11 0 1 0 0 22 8.5 8.5 0 1 1 0-22z" fill="#D6B46A"/>
+            <text x="100" y="172" text-anchor="middle" fill="#F2EBDD" font-family="Cormorant Garamond, serif" font-size="14" letter-spacing="3.5">SÉLUNE</text>
+            <text x="100" y="187" text-anchor="middle" fill="#D6B46A" font-family="Plus Jakarta Sans, sans-serif" font-size="6.5" letter-spacing="3">PARFUM</text>
+          </svg>
+        `,
+        lunarGuideCard: `
+          <svg class="w-44 h-56 text-gold mb-3" viewBox="0 0 200 250" fill="none">
+            <rect x="16" y="12" width="168" height="226" rx="14" fill="#3D080D" stroke="#D6B46A" stroke-width="1.2"/>
+            <rect x="24" y="20" width="152" height="210" rx="10" stroke="#E8D6A3" stroke-opacity="0.3" stroke-width="0.7"/>
+            <text x="100" y="48" text-anchor="middle" fill="#D6B46A" font-family="Cormorant Garamond, serif" font-size="12" letter-spacing="3">LUNAR GUIDE</text>
+            <circle cx="66" cy="96" r="16" stroke="#D6B46A" stroke-width="1" stroke-dasharray="2 2"/>
+            <path d="M136 80a16 16 0 0 1 0 32 12 12 0 0 0 0-32z" fill="#D6B46A"/>
+            <circle cx="66" cy="156" r="16" fill="#D6B46A" fill-opacity="0.85"/>
+            <path d="M134 140a16 16 0 0 0 0 32 12 12 0 0 1 0-32z" fill="#D6B46A"/>
+            <text x="100" y="208" text-anchor="middle" fill="#F2EBDD" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="2.5">SÉLUNE PARFUM</text>
+          </svg>
+        `,
+        packagingOne: `
+          <svg class="w-44 h-44 text-gold mb-2" viewBox="0 0 200 200" fill="none">
+            <rect x="44" y="24" width="112" height="152" rx="10" fill="#570B16" stroke="#D6B46A" stroke-width="1.4"/>
+            <rect x="52" y="32" width="96" height="136" rx="6" stroke="#E8D6A3" stroke-opacity="0.35" stroke-width="0.8"/>
+            <path d="M104 64a16 16 0 1 0 0 32 12 12 0 1 1 0-32z" fill="#D6B46A"/>
+            <text x="100" y="118" text-anchor="middle" fill="#F2EBDD" font-family="Cormorant Garamond, serif" font-size="15" letter-spacing="3.5">SÉLUNE</text>
+            <text x="100" y="133" text-anchor="middle" fill="#D6B46A" font-family="Plus Jakarta Sans, sans-serif" font-size="7" letter-spacing="3">PARFUM</text>
+          </svg>
+        `,
+        packagingTwo: `
+          <svg class="w-44 h-44 text-gold mb-2" viewBox="0 0 200 200" fill="none">
+            <polygon points="100,24 164,58 164,142 100,176 36,142 36,58" fill="#3D080D" stroke="#D6B46A" stroke-width="1.3"/>
+            <circle cx="100" cy="100" r="34" stroke="#E8D6A3" stroke-opacity="0.4" stroke-width="0.9"/>
+            <path d="M104 82a18 18 0 1 0 0 36 14 14 0 1 1 0-36z" fill="#D6B46A"/>
+          </svg>
+        `,
+        lifestyleUsage: `
+          <svg class="w-48 h-40 text-gold mb-2" viewBox="0 0 240 180" fill="none">
+            <circle cx="120" cy="90" r="68" stroke="#D6B46A" stroke-opacity="0.35" stroke-width="0.9"/>
+            <circle cx="120" cy="90" r="48" stroke="#E8D6A3" stroke-opacity="0.5" stroke-width="0.8" stroke-dasharray="3 3"/>
+            <path d="M126 56a34 34 0 1 0 0 68 26 26 0 1 1 0-68z" fill="#D6B46A" fill-opacity="0.28" stroke="#D6B46A" stroke-width="1.2"/>
+            <text x="120" y="95" text-anchor="middle" fill="#F2EBDD" font-family="Cormorant Garamond, serif" font-size="16" letter-spacing="4">SÉLUNE</text>
+          </svg>
+        `
+      };
+
+      fallback.innerHTML = `
+        ${artworks[assetKey] || artworks.logo}
+        <p class="font-serif text-sm sm:text-base tracking-[0.14em] text-ivory uppercase">${title}</p>
+        <p class="text-[10px] tracking-[0.14em] text-champagne/75 mt-1">Klik <span class="text-gold underline">MEDIA</span> di kanan atas untuk unggah foto asli saat presentasi</p>
+      `;
+      parent.appendChild(fallback);
+    }
+
+    /**
+     * Single Persistent HTML5 Audio Instance
+     * - Strictly no autoplay
+     * - Synchronizes Welcome Player and Floating Player seamlessly
+     */
+    function initSingleAudioEngine() {
+      const audio = document.getElementById('selune-audio-engine');
+      const playButtons = document.querySelectorAll('[data-audio-action="play"]');
+      const pauseButtons = document.querySelectorAll('[data-audio-action="pause"]');
+      const volumeSliders = document.querySelectorAll('.audio-volume-slider');
+
+      const welcomeWave = document.getElementById('welcome-soundwave');
+      const floatingWave = document.getElementById('floating-soundwave');
+      const welcomeDot = document.getElementById('welcome-audio-dot');
+      const floatingDot = document.getElementById('floating-audio-dot');
+      const welcomeStatus = document.getElementById('welcome-audio-status');
+      const floatingStatus = document.getElementById('floating-audio-status');
+
+      // Set track names
+      document.getElementById('welcome-track-name').textContent = SELUNE_ASSETS.audioTrackTitle;
+      document.getElementById('floating-track-name').textContent = SELUNE_ASSETS.audioTrackTitle;
+
+      // Configure audio source if provided
+      const trackUrl = SELUNE_ASSETS.audioTrackUrl;
+      const hasValidUrl = trackUrl && !trackUrl.includes('[TEMPELKAN');
+
+      if (hasValidUrl) {
+        audio.src = trackUrl;
+        audio.load();
+      } else {
+        setStatusMessage('Audio ambience siap diputar segera setelah URL musik ditambahkan.');
+      }
+
+      audio.volume = 0.75;
+
+      function setStatusMessage(msg, isError = false) {
+        if (welcomeStatus) {
+          welcomeStatus.textContent = msg;
+          welcomeStatus.classList.toggle('text-champagne', !isError);
+          welcomeStatus.classList.toggle('text-gold', isError);
+        }
+        if (floatingStatus) {
+          floatingStatus.textContent = msg;
+          floatingStatus.classList.remove('hidden');
+        }
+      }
+
+      function syncPlayingUI(isPlaying) {
+        [welcomeWave, floatingWave].forEach((wave) => {
+          if (wave) wave.classList.toggle('is-playing', isPlaying);
+        });
+
+        [welcomeDot, floatingDot].forEach((dot) => {
+          if (!dot) return;
+          if (isPlaying) {
+            dot.classList.remove('bg-gold/30');
+            dot.classList.add('bg-gold', 'shadow-[0_0_10px_#D6B46A]');
+          } else {
+            dot.classList.add('bg-gold/30');
+            dot.classList.remove('bg-gold', 'shadow-[0_0_10px_#D6B46A]');
+          }
+        });
+      }
+
+      // Play handler (User gesture triggered)
+      playButtons.forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const currentSrc = SELUNE_ASSETS.audioTrackUrl;
+          if (!currentSrc || currentSrc.includes('[TEMPELKAN')) {
+            setStatusMessage('Sumber audio belum dikonfigurasi pada pengaturan media.', true);
+            return;
+          }
+
+          if (audio.src !== currentSrc && !currentSrc.startsWith('blob:')) {
+            audio.src = currentSrc;
+          }
+
+          try {
+            await audio.play();
+            syncPlayingUI(true);
+            setStatusMessage('Sedang memutar SÉLUNE — Moonlight Ambience.');
+          } catch (err) {
+            syncPlayingUI(false);
+            setStatusMessage('Gunakan tombol MEDIA di kanan atas untuk memuat MP3 jika jaringan membatasi tautan.', true);
+          }
+        });
+      });
+
+      // Pause handler
+      pauseButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          audio.pause();
+          syncPlayingUI(false);
+          setStatusMessage('Alunan musik dijeda.');
+        });
+      });
+
+      // Synchronized Volume Sliders
+      volumeSliders.forEach((slider) => {
+        slider.addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value);
+          audio.volume = val;
+          volumeSliders.forEach((other) => {
+            if (other !== e.target) other.value = val;
+          });
+        });
+      });
+
+      // Handle native audio errors gracefully
+      audio.addEventListener('error', () => {
+        syncPlayingUI(false);
+        setStatusMessage('Maaf, berkas audio tidak dapat dimuat saat ini.', true);
+      });
+    }
+
+    /**
+     * Welcome Screen Entry & Re-entry Controls
+     */
+    function initWelcomeExperience() {
+      const welcomeScreen = document.getElementById('welcome-screen');
+      const enterBtn = document.getElementById('enter-world-btn');
+      const reopenBtns = [
+        document.getElementById('reopen-welcome-btn'),
+        document.getElementById('mobile-reopen-welcome')
+      ];
+
+      // Lock background scroll while welcome screen is active
+      document.body.style.overflow = 'hidden';
+
+      if (enterBtn && welcomeScreen) {
+        enterBtn.addEventListener('click', () => {
+          welcomeScreen.classList.add('dismissed');
+          document.body.style.overflow = '';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      reopenBtns.forEach((btn) => {
+        if (!btn || !welcomeScreen) return;
+        btn.addEventListener('click', () => {
+          welcomeScreen.classList.remove('dismissed');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+    }
+
+    /**
+     * Scroll-responsive Navbar & Functional Mobile Menu
+     */
+    function initNavigation() {
+      const navbar = document.getElementById('main-navbar');
+      const toggleBtn = document.getElementById('mobile-menu-toggle');
+      const drawer = document.getElementById('mobile-menu-drawer');
+      const iconOpen = document.getElementById('menu-icon-open');
+      const iconClose = document.getElementById('menu-icon-close');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          navbar.classList.remove('bg-transparent', 'border-transparent');
+          navbar.classList.add('bg-maroon/92', 'backdrop-blur-lg', 'border-gold/25', 'shadow-lg');
+        } else {
+          navbar.classList.add('bg-transparent', 'border-transparent');
+          navbar.classList.remove('bg-maroon/92', 'backdrop-blur-lg', 'border-gold/25', 'shadow-lg');
+        }
+      }, { passive: true });
+
+      function setMobileMenu(open) {
+        drawer.classList.toggle('hidden', !open);
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+        toggleBtn.setAttribute('aria-expanded', String(open));
+      }
+
+      if (toggleBtn && drawer) {
+        toggleBtn.addEventListener('click', () => {
+          const isCurrentlyClosed = drawer.classList.contains('hidden');
+          setMobileMenu(isCurrentlyClosed);
+        });
+
+        mobileLinks.forEach((link) => {
+          link.addEventListener('click', () => setMobileMenu(false));
+        });
+      }
+    }
+
+    /**
+     * Subtle IntersectionObserver Reveal for Editorial Sections
+     */
+    function initScrollReveals() {
+      const sections = document.querySelectorAll('.reveal-section');
+      if (!('IntersectionObserver' in window)) {
+        sections.forEach((sec) => sec.classList.add('is-visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      sections.forEach((sec) => observer.observe(sec));
+    }
+
+    /**
+     * Presentation Media Manager Modal
+     * Ensures 100% reliability during live competition presentations by allowing
+     * instant direct-URL pasting or local file selection for all official assets.
+     */
+    function initMediaManagerModal() {
+      const openBtn = document.getElementById('open-media-panel-btn');
+      const closeBtn = document.getElementById('close-media-modal-btn');
+      const applyBtn = document.getElementById('apply-media-modal-btn');
+      const modal = document.getElementById('media-loader-modal');
+      const rowsContainer = document.getElementById('media-asset-rows');
+      const audioUrlInput = document.getElementById('media-audio-url-input');
+      const audioFileInput = document.getElementById('media-audio-file-input');
+      const audioEngine = document.getElementById('selune-audio-engine');
+
+      if (!openBtn || !modal || !rowsContainer) return;
+
+      const assetDefinitions = [
+        { key: 'logo', label: 'A. Logo Resmi SÉLUNE PARFUM' },
+        { key: 'lunarGuideCard', label: 'B. Kartu Panduan Lunar Fragrance' },
+        { key: 'bottleMain', label: 'C. Foto Botol Utama SÉLUNE PARFUM' },
+        { key: 'packagingOne', label: 'D1. Foto Packaging Pertama' },
+        { key: 'packagingTwo', label: 'D2. Foto Packaging Kedua' },
+        { key: 'lifestyleUsage', label: 'E. Foto Produk Dalam Penggunaan' }
+      ];
+
+      function renderRows() {
+        rowsContainer.innerHTML = assetDefinitions.map(({ key, label }) => {
+          const val = SELUNE_ASSETS[key] && !SELUNE_ASSETS[key].includes('[TEMPELKAN') ? SELUNE_ASSETS[key] : '';
+          return `
+            <div class="rounded-2xl border hairline-gold bg-burgundy/45 p-3.5">
+              <label class="block text-[10px] tracking-[0.2em] uppercase text-gold mb-2">${label}</label>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" data-media-key="${key}" value="${val}" placeholder="Tempelkan Direct Image URL (i.ibb.co/...)..."
+                  class="flex-1 rounded-xl border hairline-gold bg-maroon px-3 py-2 text-ivory placeholder-ivory/40 focus:outline-none focus:border-gold" />
+                <label class="cursor-pointer inline-flex items-center justify-center px-3.5 py-2 rounded-xl border hairline-gold bg-gold text-softblack font-medium tracking-[0.12em] uppercase hover:bg-champagne transition-colors shrink-0">
+                  <span>Pilih Foto</span>
+                  <input type="file" accept="image/*" data-media-file-key="${key}" class="hidden" />
+                </label>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        if (audioUrlInput) {
+          audioUrlInput.value = SELUNE_ASSETS.audioTrackUrl || '';
+        }
+
+        rowsContainer.querySelectorAll('input[data-media-file-key]').forEach((fileInput) => {
+          fileInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const key = fileInput.getAttribute('data-media-file-key');
+            const objectUrl = URL.createObjectURL(file);
+            SELUNE_ASSETS[key] = objectUrl;
+            const textInput = rowsContainer.querySelector(`input[data-media-key="${key}"]`);
+            if (textInput) textInput.value = file.name;
+            hydrateOfficialAssets();
+          });
+        });
+      }
+
+      if (audioFileInput) {
+        audioFileInput.addEventListener('change', (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          const objectUrl = URL.createObjectURL(file);
+          SELUNE_ASSETS.audioTrackUrl = objectUrl;
+          if (audioUrlInput) audioUrlInput.value = file.name;
+          if (audioEngine) {
+            audioEngine.src = objectUrl;
+            audioEngine.load();
+          }
+        });
+      }
+
+      openBtn.addEventListener('click', () => {
+        renderRows();
+        modal.classList.remove('hidden');
+      });
+
+      closeBtn?.addEventListener('click', () => modal.classList.add('hidden'));
+
+      applyBtn?.addEventListener('click', async () => {
+        rowsContainer.querySelectorAll('input[data-media-key]').forEach((input) => {
+          const key = input.getAttribute('data-media-key');
+          const val = input.value.trim();
+          if (val && !SELUNE_ASSETS[key]?.startsWith('blob:')) {
+            SELUNE_ASSETS[key] = val;
+          }
+        });
+
+        const audioVal = audioUrlInput?.value.trim();
+        if (audioVal && !SELUNE_ASSETS.audioTrackUrl?.startsWith('blob:')) {
+          SELUNE_ASSETS.audioTrackUrl = audioVal;
+          if (audioEngine) {
+            audioEngine.src = audioVal;
+            audioEngine.load();
+          }
+        }
+
+        await hydrateOfficialAssets();
+        modal.classList.add('hidden');
+      });
+    }
+  </script>
+</body>
+</html>
